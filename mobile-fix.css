@@ -1,30 +1,59 @@
-/* --- AICT mobile fix: allow normal scrolling --- */
+/* AICT GitHub Pages - Notion Snapshot Mobile Fix
+   Goal: make layout fit screen and restore scrolling on iOS Safari
+*/
 
-html.notion-html,
-body.notion-body,
-#notion-app {
-  height: auto !important;
-  min-height: 100vh !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  position: static !important;
-}
+@media (max-width: 900px) {
+  /* Ensure mobile viewport behavior is not blocked by fixed desktop widths */
+  html, body, #notion-app {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 
-/* Notion wraps content in internal scrollers - uncap them */
-.notion-app-inner {
-  height: auto !important;
-  min-height: 100vh !important;
-}
+  /* Notion export hard locks scroll on html/body/app - we keep the lock,
+     but re-enable scrolling on the internal scroller (more reliable on iOS) */
+  html.notion-html,
+  body.notion-body,
+  #notion-app {
+    height: 100vh !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
 
-.notion-scroller {
-  height: auto !important;
-  max-height: none !important;
-  overflow: visible !important;
-}
+  /* Re-enable scrolling where Notion expects it */
+  .notion-scroller {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
 
-/* Some wrappers are explicitly height:100% inline - make them flexible */
-.notion-app-inner > div,
-.notion-app-inner > div > div {
-  height: auto !important;
-  min-height: 100vh !important;
+  /* Force content to use full width on mobile */
+  .layout,
+  .layout-column,
+  .layout-row,
+  .notion-page,
+  .notion-page-content,
+  .notion-app-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Override common fixed content widths from desktop mode */
+  .layout {
+    --content-width: 100% !important;
+  }
+
+  /* Images must never overflow */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Add a bit of breathing room so text is not glued to the edges */
+  .notion-page-content {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
+  }
 }
