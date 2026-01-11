@@ -1,19 +1,47 @@
-/* Mobile scaling hack for Notion snapshot exports */
+/* Mobile scaling hack + scroll fix for Notion snapshot exports */
 @media (max-width: 900px) {
   html, body {
-    width: 100%;
-    overflow-x: hidden;
+    width: 100% !important;
+    height: auto !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Scale the whole Notion app down on small screens */
+  /* Undo internal fixed-height scroll containers (common in Notion exports) */
+  #notion-app,
+  #notion-app * {
+    max-height: none !important;
+  }
+
   #notion-app {
+    height: auto !important;
+    overflow: visible !important;
     transform-origin: top left;
     transform: scale(0.42);
     width: calc(100% / 0.42);
   }
+
+  /* Common Notion wrapper classes - make sure they don't trap scrolling */
+  .notion-frame,
+  .notion-app,
+  .notion-scroller,
+  .notion-viewport,
+  .notion-page,
+  .notion-page-content {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Safety for images */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
 }
 
-/* Optional: a bit less aggressive scaling on tablets */
+/* Tablet: less aggressive scaling */
 @media (min-width: 601px) and (max-width: 900px) {
   #notion-app {
     transform: scale(0.55);
