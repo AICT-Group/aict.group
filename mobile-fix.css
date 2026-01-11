@@ -1,50 +1,30 @@
-/* Mobile scaling hack + scroll fix for Notion snapshot exports */
-@media (max-width: 900px) {
-  html, body {
-    width: 100% !important;
-    height: auto !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
+/* --- AICT mobile fix: allow normal scrolling --- */
 
-  /* Undo internal fixed-height scroll containers (common in Notion exports) */
-  #notion-app,
-  #notion-app * {
-    max-height: none !important;
-  }
-
-  #notion-app {
-    height: auto !important;
-    overflow: visible !important;
-    transform-origin: top left;
-    transform: scale(0.42);
-    width: calc(100% / 0.42);
-  }
-
-  /* Common Notion wrapper classes - make sure they don't trap scrolling */
-  .notion-frame,
-  .notion-app,
-  .notion-scroller,
-  .notion-viewport,
-  .notion-page,
-  .notion-page-content {
-    height: auto !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-  }
-
-  /* Safety for images */
-  img {
-    max-width: 100% !important;
-    height: auto !important;
-  }
+html.notion-html,
+body.notion-body,
+#notion-app {
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  position: static !important;
 }
 
-/* Tablet: less aggressive scaling */
-@media (min-width: 601px) and (max-width: 900px) {
-  #notion-app {
-    transform: scale(0.55);
-    width: calc(100% / 0.55);
-  }
+/* Notion wraps content in internal scrollers - uncap them */
+.notion-app-inner {
+  height: auto !important;
+  min-height: 100vh !important;
+}
+
+.notion-scroller {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Some wrappers are explicitly height:100% inline - make them flexible */
+.notion-app-inner > div,
+.notion-app-inner > div > div {
+  height: auto !important;
+  min-height: 100vh !important;
 }
