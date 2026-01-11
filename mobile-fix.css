@@ -56,4 +56,38 @@
     padding-right: 16px !important;
     box-sizing: border-box !important;
   }
+
+  /* Typography: scale down desktop snapshot sizes on mobile */
+  html {
+    font-size: 14px !important; /* base size */
+  }
+
+  body {
+    font-size: 1rem !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Headings: avoid giant desktop headlines */
+  h1 { font-size: clamp(26px, 7vw, 38px) !important; line-height: 1.1 !important; }
+  h2 { font-size: clamp(20px, 5.5vw, 28px) !important; line-height: 1.2 !important; }
+  h3 { font-size: clamp(18px, 4.8vw, 22px) !important; line-height: 1.25 !important; }
+
+  /* Images: ensure they fit, and optionally don't dominate */
+  img, video, svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Some Notion exports wrap images in fixed-width containers */
+  figure, .notion-image-block, .notion-asset-wrapper {
+    max-width: 100% !important;
+  }
+
+  /* Optional: make images a bit smaller than full width */
+  img {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: min(100%, 520px) !important;
+  }
 }
