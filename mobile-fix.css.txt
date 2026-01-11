@@ -1,0 +1,22 @@
+/* Mobile scaling hack for Notion snapshot exports */
+@media (max-width: 900px) {
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Scale the whole Notion app down on small screens */
+  #notion-app {
+    transform-origin: top left;
+    transform: scale(0.42);
+    width: calc(100% / 0.42);
+  }
+}
+
+/* Optional: a bit less aggressive scaling on tablets */
+@media (min-width: 601px) and (max-width: 900px) {
+  #notion-app {
+    transform: scale(0.55);
+    width: calc(100% / 0.55);
+  }
+}
